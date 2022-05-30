@@ -1,4 +1,5 @@
-{% comment %} {% extends 'users/base.html' %}
+{% extends 'users/base.html' %}
+
 
 {% block content %}
 {% load crispy_forms_tags %}
@@ -10,22 +11,28 @@
 {% else %}
 
 
-
-<h3>Fill out the form please!</h3>
-<form action="" method="post" enctype="multipart/form-data">
+<h3 class='uc'>Fill out the form please!</h3>
+<form class="register_form" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %} 
     {{ form | crispy }}
     <button type="submit" class="btn btn-danger">Register</button>
 </form>
 {% endif %} 
 
-{% endblock content %} {% endcomment %}
+{% endblock content %} 
 
-<h1>Register Page</h1>
+
+
+
+
+{% comment %} <h1>Register Page</h1>
+
+
 
 <form action="" method="POST">
+ 
    {% csrf_token %}
    {{form.as_p}}
    <input type="submit" value='register'>
 
-</form>
+</form> {% endcomment %}
