@@ -1,10 +1,13 @@
 
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+
+# from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login, logout
-# from .forms import UserForm
+from .forms import UserForm
 from django.contrib import messages
+
+from django.contrib.auth.forms import AuthenticationForm
 
 
 
@@ -12,8 +15,7 @@ from django.contrib import messages
 def home(request):
     return render(request, 'users/home.html')
 
-def test(request):
-    return render(request, 'users/test.html')
+
 
 def user_logout(request):
 
@@ -23,17 +25,36 @@ def user_logout(request):
 
 
 
-
-
-
-
-
-
 def register(request):
-    form =  UserCreationForm()
-   
+    form = UserForm()
+
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid() :
+           user = form.save()
+          
+       
+
+           login(request, user)
+
+           return redirect("home")
 
     context = {
-        'form':form
+     'form':form,
     }
     return render(request, "users/register.html", context) 
+
+def user_login(request):
+    form = AuthenticationForm(request, data=request.POST) # data=> method post ise formu dolduruyor, auth forma ait bir özellik
+
+    if form.is_valid():
+        user = form.get_user()
+        #get_user authform a ait bir özellik
+        
+        if user:
+          
+            login(request, user)
+            return redirect('home')
+    
+
+    return render(request, 'users/user_login.html', {'form': form})      

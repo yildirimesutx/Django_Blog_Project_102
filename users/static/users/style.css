@@ -1,9 +1,28 @@
 .register_form{
     width: 20rem;
     margin: 0 auto;
-    background-color: aqua;
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 3rem;
+  
 
 }
+
+.login_form{
+    width: 20rem;
+    margin: 0 auto;
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 3rem;
+
+
+}
+
+
+
 .uc{
-    background-color: red
+    text-align: center;
+    margin-top: 1rem;
 }
