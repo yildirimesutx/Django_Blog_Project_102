@@ -1,20 +1,10 @@
-{% extends 'users/base.html' %}
-
-
+{% extends 'blog/base.html' %}
 
 {% block content %}
-<h3>Home Page</h3>
-
-{% if request.user.is_authenticated %}
-
-<h4>Wellcome {{request.user}}!</h4>
-{% else %}
-
-<h4>Wellcome Guest!</h4>
-{% endif %} 
 
 
-{% for i in form  %}
+
+{% for i in post  %}
 <div class="card" style="width: 18rem;">
     <img src="{{i.image}}" class="card-img-top" alt="...">
     <div class="card-body">
@@ -24,12 +14,5 @@
     </div>
   </div>
 {% endfor %}
-     
 
-
-
-
-{% endblock content %}
-
-
-
+{% endblock %}
