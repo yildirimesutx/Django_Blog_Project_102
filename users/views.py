@@ -21,7 +21,7 @@ def user_logout(request):
 
    messages.success(request, 'You logged out') 
    logout(request)
-   return redirect("home")
+   return redirect("list")
 
 
 
@@ -37,7 +37,7 @@ def register(request):
 
            login(request, user)
 
-           return redirect("home")
+           return redirect("list")
 
     context = {
      'form':form,
@@ -54,7 +54,7 @@ def user_login(request):
         if user:
           
             login(request, user)
-            return redirect('home')
+            return redirect('list')
     
 
     return render(request, 'users/user_login.html', {'form': form})      

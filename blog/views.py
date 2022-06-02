@@ -1,4 +1,4 @@
-import re
+
 from django.shortcuts import render, redirect
 from .forms import NewPostForm
 from .models import NewPost
@@ -10,7 +10,7 @@ def newpost_add(request):
     print(request.POST)
 
     if request.method == 'POST':
-        form = NewPostForm(request.POST)
+        form = NewPostForm(request.POST,  request.FILES)
         if form.is_valid():
             form.save()
             
@@ -27,7 +27,7 @@ def newpost_add(request):
 def post_list(request):
 
     post = NewPost.objects.all()
-
+    print(post)
     context = {
        'post' : post
     }
