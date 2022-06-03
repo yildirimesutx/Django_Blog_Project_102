@@ -12,7 +12,9 @@
       <div class="card h-100">
         <img src="{{i.profile_pics.url}}" class="card-img-top" alt="...">
         <div class="card-body">
+           <a href="{% url 'detail' i.id %}">
           <h5 class="card-title">{{i.title}}</h5>
+            </a>
           <p class="card-text">{{i.content}}</p>
         </div>
         {% comment %} <div class="card-footer">

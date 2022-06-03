@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+
+<div class="detail_page">
+<h2>Post Detail</h2>
+
+<div class="detail">
+  <img src="{{post.profile_pics.url}}" alt="">
+  <hr>
+ <h5>{{post.title}}</h5>
+ <hr>
+  <p>{{post.content}}</p>
+  <hr>
+  <p>{{post.created}}</p>
+</div>
+
+
+<a href="{% url 'update' post.id %} ">
+<button type="button" class="btn btn-primary">Edit</button>
+</a>
+
+<button type="button" class="btn btn-danger">Delete</button>
+</div>
+
+
+{% endblock %}

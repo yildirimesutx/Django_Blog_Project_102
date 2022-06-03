@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<form class="newpost_add" action="" method='post' enctype="multipart/form-data">
+    <h2>New Update</h2>
+  {% csrf_token %}
+  {{form | crispy}}
+<br>
+  <button type="submit" class="btn btn-danger">UPDATE</button>
+</form>
+
+{% endblock %}

@@ -26,6 +26,19 @@
     margin: 2rem;
 }
 
+.detail_page{
+    margin: 5rem auto;
+    width: 50rem;
+    background-color: rgb(162, 162, 168);
+}
+
+/* .detail{
+    margin: 5rem auto;
+    width: 50rem;
+    background-color: blue;
+
+} */
+
 
 
 

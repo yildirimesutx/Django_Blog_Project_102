@@ -34,3 +34,32 @@ def post_list(request):
 
     return render(request, 'blog/post_list.html', context)
 
+
+def post_detail(request, id):
+    post = NewPost.objects.get(id=id)
+
+    context = {
+        "post":post
+    }
+
+    return render(request, 'blog/post_detail.html', context)
+
+
+def post_update(request, id):
+    post = NewPost.objects.get(id=id)
+    form = NewPostForm(instance=post)
+
+    if request.method == 'POST':
+       form = NewPostForm(request.POST, instance=post)
+       if form.is_valid():
+           form.save()
+
+           return redirect("list")
+
+    context = {
+        "form" : form
+    }       
+
+    return render(request, "blog/post_update.html", context)       
+
+
