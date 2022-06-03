@@ -15,15 +15,48 @@
   <hr>
   <p>{{post.created}}</p>
 </div>
+<hr>
+
+<h5>Comments</h5>
+
+<form action="" method='post'>
+  {% csrf_token %}
+  {{comment}}
+
+  <button type="submit" class="btn btn-danger">ADD</button>
+
+</form>
+
+<hr>
+
+<div>
+
+{% for i in comment_read %}
+    
+<p>{{i.comment}}</p>
+<small class="text-muted">{{i.create}}</small>
+ <hr>
+{% endfor %}
 
 
+</div>
+
+
+{% if  request.user == post.user%}
+ 
 <a href="{% url 'update' post.id %} ">
-<button type="button" class="btn btn-primary">Edit</button>
+  <button type="button" class="btn btn-primary">Edit</button>
+  </a>
+  
+  <a href="{% url 'delete' post.id %} ">
+  <button type="button" class="btn btn-danger">Delete</button>
 </a>
 
-<a href="{% url 'delete' post.id %} ">
-<button type="button" class="btn btn-danger">Delete</button>
-</a>
+{% endif %}
+  
+
+
+
 </div>
 
 

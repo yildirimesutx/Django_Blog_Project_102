@@ -1,19 +1,22 @@
 
 from django.shortcuts import render, redirect
-from .forms import NewPostForm
-from .models import NewPost
+from .forms import NewPostForm, CommentForm
+from .models import Comments, NewPost
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required(login_url ='/auth/login')
 def newpost_add(request):
     form = NewPostForm() 
-    print(request.POST)
+    
 
     if request.method == 'POST':
         form = NewPostForm(request.POST,  request.FILES)
         if form.is_valid():
-            form.save()
-            
+            newform = form.save(commit=False)
+            newform.user = request.user
+            newform.save()
             return redirect("list")
 
     context = {
@@ -34,17 +37,30 @@ def post_list(request):
 
     return render(request, 'blog/post_list.html', context)
 
-
+@login_required(login_url ='/auth/login')
 def post_detail(request, id):
     post = NewPost.objects.get(id=id)
+    comment = CommentForm()
+    comment_read = Comments.objects.all()
+    
+    if request.method =='POST':
+        comment = CommentForm(request.POST)
+        if comment.is_valid():
+            comment.save()
+        
+        return render(request, 'blog/post_detail.html',{"post":post,
+        "comment":comment,
+        "comment_read":comment_read} )  
 
     context = {
-        "post":post
+        "post":post,
+        "comment":comment,
+        "comment_read":comment_read
     }
 
     return render(request, 'blog/post_detail.html', context)
 
-
+@login_required
 def post_update(request, id):
     post = NewPost.objects.get(id=id)
     form = NewPostForm(instance=post)
@@ -62,7 +78,7 @@ def post_update(request, id):
 
     return render(request, "blog/post_update.html", context)       
 
-
+@login_required
 def post_delete(request, id):
     post = NewPost.objects.get(id=id)
 
