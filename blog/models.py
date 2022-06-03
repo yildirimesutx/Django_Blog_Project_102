@@ -7,6 +7,7 @@ class NewPost(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField(max_length=500)
     profile_pics = models.ImageField(upload_to='profile_pics', blank=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

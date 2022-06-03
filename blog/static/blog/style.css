@@ -6,3 +6,26 @@
     border-radius: 1rem;
     margin-top: 3rem;
 }
+
+
+
+.card_main{
+    display: flex;
+}
+
+.card-img-top{
+    height: 15rem;
+    
+}
+
+.card{
+    padding: 1rem;
+}
+
+.row{
+    margin: 2rem;
+}
+
+
+
+
