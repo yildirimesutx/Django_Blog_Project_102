@@ -50,7 +50,7 @@ def post_update(request, id):
     form = NewPostForm(instance=post)
 
     if request.method == 'POST':
-       form = NewPostForm(request.POST, instance=post)
+       form = NewPostForm(request.POST,  request.FILES or None, instance=post)
        if form.is_valid():
            form.save()
 
@@ -63,3 +63,18 @@ def post_update(request, id):
     return render(request, "blog/post_update.html", context)       
 
 
+def post_delete(request, id):
+    post = NewPost.objects.get(id=id)
+
+    if request.method =='POST':
+        post.delete()
+
+        return redirect("list")
+
+    context= {
+        'post':post
+    } 
+
+    return render(request, 'blog/post_delete.html', context)   
+
+  
