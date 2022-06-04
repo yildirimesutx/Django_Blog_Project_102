@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
 
-# from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm
@@ -45,11 +45,13 @@ def register(request):
     return render(request, "users/register.html", context) 
 
 def user_login(request):
-    form = AuthenticationForm(request, data=request.POST) # data=> method post ise formu dolduruyor, auth forma ait bir özellik
+    form = AuthenticationForm(request, data=request.POST) # data=> metormhod post ise fu dolduruyor, auth forma ait bir özellik
 
     if form.is_valid():
         user = form.get_user()
         #get_user authform a ait bir özellik
+
+      
         
         if user:
           
@@ -57,4 +59,10 @@ def user_login(request):
             return redirect('list')
     
 
-    return render(request, 'users/user_login.html', {'form': form})      
+    return render(request, 'users/user_login.html', {'form': form}) 
+
+def profile_page(request):
+    profile = UserCreationForm(request.POST)
+
+    return render(request, 'users/profile_page.html', {'profile': profile})
+

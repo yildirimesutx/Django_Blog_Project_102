@@ -12,4 +12,5 @@ class NewPostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm): 
     class Meta:
         model = Comments
-        fields = '__all__'       
+        # fields = '__all__'       
+        exclude = ('post',)

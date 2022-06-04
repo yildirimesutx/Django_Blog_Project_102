@@ -48,9 +48,9 @@ def post_detail(request, id):
         if comment.is_valid():
             comment.save()
         
-        return render(request, 'blog/post_detail.html',{"post":post,
-        "comment":comment,
-        "comment_read":comment_read} )  
+        # return render(request, 'blog/post_detail.html',{"post":post,
+        # "comment":comment,
+        # "comment_read":comment_read} )  
 
     context = {
         "post":post,
