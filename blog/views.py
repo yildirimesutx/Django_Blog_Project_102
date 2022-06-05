@@ -1,10 +1,14 @@
 
 from django.shortcuts import render, redirect
 from .forms import NewPostForm, CommentForm
-from .models import Comments, NewPost
+from .models import Comments, NewPost, Like
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+def about_page(request):
+    return render(request, 'blog/about.html')
+
 
 @login_required(login_url ='/auth/login')
 def newpost_add(request):
@@ -30,32 +34,43 @@ def newpost_add(request):
 def post_list(request):
 
     post = NewPost.objects.all()
-    print(post)
+
     context = {
-       'post' : post
+       'post' : post,
+
     }
 
     return render(request, 'blog/post_list.html', context)
 
 @login_required(login_url ='/auth/login')
 def post_detail(request, id):
-    post = NewPost.objects.get(id=id)
-    comment = CommentForm()
-    comment_read = Comments.objects.all()
+    blog = NewPost.objects.get(id=id)
+    comment_form = CommentForm()
+    comment_read = Comments.objects.filter(post=blog.id)
+    blog.post_view += 1
+    blog.save()
+    number = len(comment_read)
     
     if request.method =='POST':
-        comment = CommentForm(request.POST)
-        if comment.is_valid():
-            comment.save()
-        
-        # return render(request, 'blog/post_detail.html',{"post":post,
-        # "comment":comment,
-        # "comment_read":comment_read} )  
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+           comment = comment_form.save(commit=False)
+           blog.comment_number += 1
+           comment.post = blog
+           comment.user = request.user
+           blog.save()
+           comment.save()
+
+           return redirect("detail", id) 
+
+          
+     
 
     context = {
-        "post":post,
-        "comment":comment,
-        "comment_read":comment_read
+        "blog":blog,
+        "comment_form":comment_form,
+        "comment_read":comment_read,
+        "number" :number
     }
 
     return render(request, 'blog/post_detail.html', context)
@@ -93,4 +108,10 @@ def post_delete(request, id):
 
     return render(request, 'blog/post_delete.html', context)   
 
-  
+def post_like(request, id):
+    blog = NewPost.objects.get(id=id)
+    # like = Like.objects.get_or_create(user=request.user, blog=blog)
+    # like.save()
+    blog.post_like += 1
+    blog.save()
+    return redirect("detail", id)

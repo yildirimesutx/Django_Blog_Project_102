@@ -7,35 +7,42 @@
 <h2>Post Detail</h2>
 
 <div class="detail">
-  <img src="{{post.profile_pics.url}}" alt="">
+  <img src="{{blog.post_image}}" alt="">
   <hr>
- <h5>{{post.title}}</h5>
+ <h5>{{blog.title}}</h5>
  <hr>
-  <p>{{post.content}}</p>
+  <p>{{blog.content}}</p>
   <hr>
-  <p>{{post.created}}</p>
+  <p>{{blog.created}}</p>
   <hr>
   
-  <p>{{post.category}}</p>
+  <p>{{blog.category}}</p>
 
 </div>
+<hr>
 
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+</svg>
+<small>{{blog.post_view}}</small>
 
 <hr>
 <h5>Enjoy this post? Give it a LIKE!!</h5>
-<button>
+<a  href="{% url 'post_like' blog.id %}">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
     <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
   </svg>
-</button>
- <small>15</small>
+</a>
+ <small>{{ blog.post_like}}</small>
 <hr>
 
 <h5>Leave a comment below</h5>
 
 <form action="" method='post'>
   {% csrf_token %}
-  {{comment}}
+  {{comment_form}}
 
   <button type="submit" class="btn btn-danger">ADD</button>
 
@@ -44,25 +51,35 @@
 <hr>
 
 <div>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
+    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  </svg>
+  <small> Total Comments : {{number}}</small>
+<hr>
+    
+  {% comment %} {{len(comment_read)}} {% endcomment %}
 
 {% for i in comment_read %}
     
 <p>{{i.comment}}</p>
+{% comment %} <small class="text-muted">{{i.blog.user}}</small> {% endcomment %}
 <small class="text-muted">{{i.create}}</small>
  <hr>
 {% endfor %}
 
 
+
 </div>
 
 
-{% if  request.user == post.user%}
+{% if  request.user == blog.user%}
  
-<a href="{% url 'update' post.id %} ">
+<a href="{% url 'update' blog.id %} ">
   <button type="button" class="btn btn-primary">Edit</button>
   </a>
   
-  <a href="{% url 'delete' post.id %} ">
+  <a href="{% url 'delete' blog.id %} ">
   <button type="button" class="btn btn-danger">Delete</button>
 </a>
 

@@ -7,7 +7,7 @@ class NewPostForm(forms.ModelForm):
     class Meta:
         model = NewPost
         # fields = '__all__'
-        exclude = ('user',)
+        exclude = ('user', 'post_view', 'post_like','comment_number' )
 
 class CommentForm(forms.ModelForm): 
     class Meta:
